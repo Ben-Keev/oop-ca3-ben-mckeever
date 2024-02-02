@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
@@ -8,9 +7,7 @@ import java.util.Stack;
  *  Name:
  *  Class Group:
  */
-public class CA3_Question4 {
-
-    
+public class CA3_Question4_copy {
 
     /*
         filename: name of the file to test.
@@ -20,33 +17,20 @@ public class CA3_Question4 {
         File file = new File("CA3_Starter_Code/" + filename);
         Scanner in = new Scanner(file);
 
-        Stack<String> openingTags = new Stack<>();
+        Stack<String> tags = new Stack<>();
+
+        while(!in.hasNext()) {
+            tags.push(in.next());
+        }
+
+        ArrayList<String> openingTags = new ArrayList<>();
         ArrayList<String> closingTags = new ArrayList<>();
 
-        String current;
-
-        while (in.hasNext()) {
-            current = in.next();
-
-            if(!current.contains("/")) {
-                openingTags.push(current);                
-            } else {
-                closingTags.add(current);
-            }
+        while(!tags.isEmpty()) {
+            
         }
 
-        for(String closingTag : closingTags) {
-            if(!openingTags.isEmpty() && !(closingTag.substring(2).contains(openingTags.peek()))) {
-                // It is not empty and tags match.
-                openingTags.pop();
-            }
-            else {
-                return false;
-            }
-        }
-
-        // All tags have been examined, if openTags is empty the file is valid.
-        return openingTags.isEmpty();
+        return false;
     }
 
     /*
