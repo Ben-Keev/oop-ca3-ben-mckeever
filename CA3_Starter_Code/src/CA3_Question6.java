@@ -1,5 +1,4 @@
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 /**
@@ -72,10 +71,11 @@ public class CA3_Question6
                 sale.qty -= polled.qty;
                 sellBlock(sale.qty); // Prompt another input
             } else {
+                original += calculateBlockWorth(blocks.peek());
                 total += calculateBlockWorth(blocks.peek(), sale.qty, sale.price); // Calculate profit and keep block
                 toRemove = sale.qty;
                 sale.qty -= blocks.peek().qty;
-                blocks.peek().qty -= sale.qty;
+                blocks.peek().qty -= toRemove;
             }
         }
 
