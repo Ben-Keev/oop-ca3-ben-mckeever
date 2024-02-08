@@ -20,6 +20,8 @@ public class CA3_Question8 {
         System.out.println("Please enter equation");
         equation = in.nextLine().trim();
         evaluateEquation(equation);
+
+        System.out.println(numbers.peek());
     }
 
     // Read equations
@@ -27,17 +29,38 @@ public class CA3_Question8 {
         char[] iterate = equation.toCharArray();
 
         for (Character c : iterate) {
-            // Check operators presence first.
-            if((operators.peek() == 'x' || operators.peek() == '/')) {
-                // The operator on top has a higher presence.
-                evaluateTop(c);
-            }
 
-            if (Character.isDigit(c)) { // Number
-                numbers.add((int) c);
-            } else{ // Operator
-                operators.add(c);
+            // Let's write it more simply...
+
+            // System.out.println(numbers);
+            // System.out.println(operators);
+            
+            if(Character.isDigit(c)) { // If you read a number
+                numbers.add(Character.getNumericValue(c)); // Push it on the number stack
+            } else if (c == '(') { // Else if you read a (
+                operators.add(c); // Push it on the operator stack
+            } else if (c == '+' || c == '-' || c == 'x' || c=='/') {
+
+                if(!operators.isEmpty()) { // Prevent stack is empty error
+                    while((c == '+' || c == '-') && (operators.peek() == 'x' || operators.peek() =='/')) {
+                        numbers.add(evaluateTop(operators.pop())); // Evaluate the top.
+                        if(operators.isEmpty()) break; // Exit loop if stack is empty.
+                    }
+                }
+                    
+                operators.add(c); // Push on the operator stack
+            } else if (c == ')') {  // If you read a )
+                while (operators.peek() != '(') { // While the top is not (
+                    numbers.add(evaluateTop(operators.pop())); // Evaluate the top
+                }
+                operators.pop(); // Pop the '('
             }
+        } // There is no more input
+
+        while (!operators.isEmpty()) { // While the operator stack is not empty
+            numbers.add(evaluateTop(operators.pop()));
+            System.out.println(numbers);
+            System.out.println(operators);
         }
     }
 
@@ -45,15 +68,12 @@ public class CA3_Question8 {
         switch (operator) {
             case 'x':
                 return product(numbers.pop(), numbers.pop());
-            
             case '/':
                 return quotient(numbers.pop(), numbers.pop());
-
             case '+':
                 return sum(numbers.pop(), numbers.pop());
             case '-':
                 return difference(numbers.pop(), numbers.pop());
-
             default:
                 return -1;
         }
