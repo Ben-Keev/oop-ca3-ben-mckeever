@@ -10,7 +10,7 @@ import java.util.Stack;
 /*
 Direction enum used to indicate direction.
  */
-enum DIRECTION {NORTH, SOUTH,EAST,WEST};
+enum DIRECTION {WEST,SOUTH,EAST, NORTH};
 
 public class CA3_Question9
 {
@@ -154,6 +154,13 @@ public class CA3_Question9
                 if (isIntersection(currentPath.dir)) { // After moving, check if intersection
                     System.out.println("Found intersection");
                     pushPossiblePaths(currentPath.dir);
+                }
+            }
+
+            for (DIRECTION direction : DIRECTION.values()) {
+                if (!isLocationInBounds(traverse(direction))) {
+                    System.out.println("Congratulations! Found the exit.");
+                    break;
                 }
             }
         }
